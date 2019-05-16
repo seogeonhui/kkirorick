@@ -1,0 +1,2 @@
+# kkirorick
+연습
