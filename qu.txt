@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <stdlib.h> //rand 함수를 위한 헤더 파일
+#include <time.h> //시간을 지정해서 랜덤을 도와주는 툴
+#include <stdbool.h> 
+
+/*
+int main(void) {
+	int win = 0;  //이겼을때 카운터를 지정 
+	int draw = 0; // 비겼을때 카운터를 지정 
+	bool userLoss = false; // bool 참과 거짓을 설정하는 코드
+	while (userLoss == false) { //반복 (user가 패배 == 실패 할경우)
+		int user_input; // 유저가 넣어주는 값을 설정
+		int com_input; // 컴퓨터가 넣어주는 값을 설정
+		srand((int)time(NULL)); //srand 가 씨앗을 뿌리는거 (int )time(null) <- 외우기
+		com_input = (rand() % ((9-1)+1) + 1);  // 컴퓨터가 넣어주는값 = rand 받아주는값이 9가지
+		printf("원하는걸 입력해보세요.\n");
+		printf("1. 바위 2. 가위 3. 보\n");
+		scanf("%d", &user_input); //유저가 넣어주는 값
+		if (com_input == user_input) { //만약 컴퓨터가 넣어주는 값과 유저가 넣어주는 값이 비겼을 경우
+			printf("비겼습니다.\n"); // 비겼습니다 하고 draw ++; 올려줌
+			draw++;
+		}
+		else if (com_input == 1) {  //만약 그게 아니고 컴퓨터는 1을 낼경우에~
+			if (user_input == 2) { // 유저가 2를 내면
+				printf("졌습니다.\n"); //졌습니다
+				userLoss = true; // 트루로 바꿔주게 되면 끝나나 ?
+			}
+			else { // 만약 그게 아니라면 
+				printf("이겼습니다.\n"); // 이겼습니다
+				win++; // win++ 윈 값을 올려줌 
+			}
+		}
+		else if (com_input == 2) { // 만약 그게 아니고  컴퓨터가 2를 내면
+			if (user_input == 1) { // 유저는 1을 내면 
+				printf("이겼습니다.\n");	 //이겼어!
+				win++;  // 윈 값을 올려주고 
+			}
+			else {
+				printf("졌습니다.\n");
+				userLoss = true;
+			}
+		}
+		else {
+			if (user_input == 1) {
+				printf("졌습니다.\n");
+				userLoss = true;
+			}
+			else {
+				printf("이겼습니다.\n");
+				win++;
+			}
+		}
+	}
+
+	printf("게임의 결과 %d승 %d무\n", win, draw);
+}
+*/
+/*/
+int main(void) {
+
+	bool strikeout = false; //bool 을 설정함
+
+	while (strikeout == false) { // 반복을 함 스트라이크 아웃이 될때 까지 
+
+		srand((int)time(NULL)); // 씨를 넣어줌 시간으로 
+		int com_input[3]; // 컴퓨터에 넣어주는 숫자 3개
+		int user_input[3]; // 유저가 넣어주는 숫자 3개
+
+
+		//컴퓨터가 서로 다른 난수 3개 저장하는 알고리즘
+		int com_num = 0;  //컴퓨터 넘버 변수로 처리
+		while (com_num < 3) { // 반복한다 컴퓨터 넘버 3개가 될때까지
+
+			bool randIsInArr = false; // 다시 반복 설정
+			int randInput = rand() % 10; // 랜덤 번호 설정하는데 몇회
+
+			for (int i = 0; i < com_num; i++) { //  반복 컴퓨터 넘버
+				if (com_input[i] == randInput) { // 만약에 컴터넘버 넣어준게 랜덤 번호랑 같으면
+					randIsInArr = true; //반복 그만
+					break; //벗어나기
+				}
+			}
+
+			if (randIsInArr == false) { // 반복
+				com_input[com_num] = randInput; //컴퓨터에 넣어준값 [컴퓨터 넘버] 이 랜덤 번호랑 같으면
+				com_num++; // 컴퓨터 넘버 상승
+			}
+		}
+
+
+		printf("유저의 선택:\n");
+
+		for (int i = 0; i < 3; i++) {
+			scanf("%d", &user_input[i]);
+		}
+
+		int strike = 0;
+		int ball = 0;
+
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (com_input[i] == user_input[j]) {
+					if (i == j) strike++;
+					else ball++;
+				}
+			}
+		}
+
+		printf("%dstrike, %dball\n", strike, ball);
+
+		if (strike == 3) { strikeout = true; }
+	}
+
+	printf("GAME OVER!\n");
+
+}
+//*/
+int main(void) {
+	int computerball[3]; //컴퓨터의 볼 저장할 int 형 변수
+	int i, j; // 반복을 위한 변수
+	int temp; // 난수 중복 체크를 위한 변수
+	int userball[3]; // 사용자의 볼을 저장할 int 형 배열
+	int count = 1; // 회차를 확인할 변수 9회까지 가능 
+	int strike; // 스트라이크의 수를 세기 위한 변수
+	int ball; //볼 수 체크
+	//난수 생성및 중복 체크
+	srand((unsigned)time(NULL));
+	for(i = 0; i < 3; i++ ) {
+		temp = (rand() % 9) + 1; // temp변수에 현재 랜덤 값을 저장
+		computerball[i] = temp; //temp값을 컴퓨터 볼에 저장
+		for (j = 0; j < i; j++) // 현재 추가된 만큼 반복
+			if(temp == computerball[j] && i != j) //만약 현재 temp값과 이전에 넣은 값중 동일한게 있다면
+			i--; //i의 값을 줄여 다시이전으로 돌아가도록
+	}
+	while (1) {
+		printf("%d회차 숫자야구\n", count);
+		while (1) {
+			printf("1부터 9까지의 숫자를  입력하세요");
+			if (userball[0] < 1 || userball[0]>9 || userball[1] < 1 || userball[1]>9 || userball[2] < 1 || userball[2]>9) { // 입력한 숫자가 1~9 숫자가 아니면 다시 입력
+				printf("범위 외의 숫자를 입력하시면 안됩니다.\n");
+				continue;
+			}
+			else if (userball[0] == userball[1] || userball[0] == userball[2] || userball[1] == userball[2]) {
+				printf("중복된 숫자를 입력하시면 안됩니다 \n");
+				continue;
+			}
+			break;
+		}
+		ball = 0;
+		strike = 0;
+		for (i = 0; i < 3; i++) {
+			for (j = 0; j < 3; j++) {
+				if (computerball[i] == userball[j]) {
+					if (i == j) {
+						strike++;
+					}
+					else ball++;
+				}
+			}
+		}
+		printf("[결과 스트라이크 :%d 볼:%d \n \n",strike, ball);
+		if (strike == 3) {
+			printf("승리");
+			break;
+		}
+		else if (count == 9) {
+			printf("패배 정답:%d %d %d", computerball[0], computerball[1], computerball[2]);
+			break;
+		}
+		count++;
+	}
+	return 0; 
+}
