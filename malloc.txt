@@ -1,10 +1,48 @@
-﻿1>------ 빌드 시작: 프로젝트: Project13, 구성: Debug Win32 ------
-1>ec.c
-1>c:\users\dmc\source\repos\project13\project13\ec.c(7): warning C4013: 'malloc'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-1>c:\users\dmc\source\repos\project13\project13\ec.c(11): warning C4013: 'gets'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-1>c:\users\dmc\source\repos\project13\project13\ec.c(18): warning C4047: '<': 'int'의 간접 참조 수준이 'char *'과(와) 다릅니다.
-1>c:\users\dmc\source\repos\project13\project13\ec.c(6): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-1>c:\program files\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(1274): note: 'scanf' 선언을 참조하십시오.
-1>Project13.vcxproj -> C:\Users\dmc\source\repos\Project13\Debug\Project13.exe
-1>"Project13.vcxproj" 프로젝트를 빌드했습니다.
-========== 빌드: 성공 1, 실패 0, 최신 0, 생략 0 ==========
+#include <stdio.h>
+
+
+int main(void) {
+	int ta,maxlen;
+	scanf("%d", &maxlen);
+	char*name = (char *)malloc(sizeof(char)*maxlen);
+	getchar();
+
+	printf("�Է�");
+	gets(name);
+
+	if (name == NULL) {
+
+		return -1;
+	}
+
+	for (int i = 0; i < name - 1; i++) {
+		if (name[i] == '\0') {
+			ta = i-1;
+			break;
+		}
+	}
+
+	int word_end = ta;
+	
+	for (int i = ta; i >= 0; i--) {
+		if (name[i] == ' ') {
+			for (int j = i + 1; j <= word_end; j++) {
+				printf("%c", name[j]);
+			}
+
+			printf(" ");
+			word_end = i - 1;
+			
+		}
+
+		else if (i==0) {
+			for (int j = i; j <= word_end; j++) {
+				printf("%c", name[j]);
+			}
+		}
+	}
+
+}
+
+
+
