@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "datastructure_arraylist.h"
+
+int main(void) {
+
+	ArrayList a;
+	ArrayList b;
+
+	arraylist_init(&a);
+	arraylist_addFirst(&a, 10);
+	arraylist_addFirst(&a, 20);
+	arraylist_addFirst(&a, 40);
+	arraylist_print(&a);
+
+	arraylist_removeElement(&a, 20);
+	arraylist_print(&a);
+	if (arraylist_isInList(&a,20)==false) {
+		arraylist_addFirst(&a,30);
+	}
+
+	arraylist_print(&a);
+	arraylist_addLast(&a, 80);
+
+	arraylist_addPos(&a,2,50);
+	arraylist_print(&a);
+
+	arraylist_init(&a);
+	arraylist_print(&a);
+
+	printf("%d\n",a.list[2]); //직접접근은 가능하다.
+	// 우리는 그렇게 쓰지않는 약속임
+	
+}
+
+// is ~이게 무슨 상태인지 예 , 아니오 맞는걸 한다.
+// int pos?
