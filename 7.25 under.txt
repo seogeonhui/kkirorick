@@ -1,0 +1,93 @@
+car .java
+
+
+package dd;
+
+public class Car {
+	String company;
+	String model;
+	int maxspeed;
+	
+	
+	Car(String model) {
+		this.model = model;
+	}
+	
+	Car(String model, String company) {
+		this(model);
+		this.company = company;
+	}
+	
+	Car(String model, String company, int maxspeed) {
+		this(model, company);
+		this.maxspeed = maxspeed;
+	}
+	
+	////////////////////////////////////////////////////////////
+	
+	public void printCar() {
+		System.out.println(model);
+	}
+	
+	public void printCompany() {
+		System.out.println(company);
+	}
+	public void printmaxspeed() {
+		
+		System.out.println(maxspeed);
+		
+	}
+	
+	
+	public void printAllInfo() {
+		printCar();
+		printCompany();
+		printmaxspeed();
+	}
+	
+	void test(int tmp, String tmp2) {
+		
+	}
+	
+	void test(String tmp2, int tmp) {
+		
+	}
+
+}
+
+
+seo.java
+
+package dd;
+
+import java.lang.Exception;
+import java.util.Scanner;
+
+public class Seo {
+
+	public static void main(String[] args) throws Exception {
+		
+		Car c1 = new Car("소나타");
+		Car c2 = new Car("제네시스","현대자동차");
+		Car c3 =new Car("a7","bmw",60);
+		
+		
+		c1.printCar();
+		c2.printCar();
+		c2.printCompany();
+		c3.printAllInfo();
+		
+		
+		
+	}	
+	
+	void test(int ... value) {
+		int sum = 0;
+		for(int i : value) {
+			sum += i;
+		}
+		System.out.println(sum);
+	}
+	
+}
+
