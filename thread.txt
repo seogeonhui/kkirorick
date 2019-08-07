@@ -1,0 +1,180 @@
+package dd;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Scanner;
+
+//Thread 상속
+class ThreadTest extends Thread {
+	
+	ThreadTest(int b, int e) {
+		begin = b;
+		end = e;
+	}
+	
+	int sum = 0;
+	int begin;
+	int end;
+	
+	public void run() {
+		for(int i = begin; i<=end; i++) {
+			sum += i;
+		}
+	}
+}
+
+//Runnable 상속
+class RunnableTest implements Runnable {
+	
+	RunnableTest(int b, int e) {
+		begin = b;
+		end = e;
+	}
+	
+	int sum = 0;
+	int begin;
+	int end;
+	
+	public void run() {
+		for(int i = begin; i<=end; i++) {
+			sum += i;
+		}
+	}
+
+}
+
+
+class NewsPaper{
+
+	  String todayNews;
+
+	  boolean isTodayNews=false;
+
+	  public void setTodayNews(String news){
+
+	    todayNews=news;
+	    isTodayNews=true;
+
+	    synchronized(this){
+	      System.out.print(Thread.currentThread().getName());
+	      System.out.println(": notify()");
+	      notifyAll();
+	    }
+	  }
+
+	  public String getTodayNews(){
+
+	    if(isTodayNews==false){
+
+	      try{
+
+	        synchronized(this){
+	          System.out.print(Thread.currentThread().getName());
+	          System.out.println(": wait()");
+	          wait();
+	        }
+	      }
+	      catch(InterruptedException e){
+	        e.printStackTrace();
+	      }
+	    }
+	    return todayNews;
+	  }
+
+}
+
+class NewsWriter extends Thread{
+
+	  NewsPaper paper;
+
+	  public NewsWriter(NewsPaper paper){
+	    this.paper=paper;
+	  }
+
+	  public void run(){
+	    paper.setTodayNews("자바의 열기가 뜨겁습니다.");
+	  }
+}
+
+class NewsReader extends Thread{
+
+	 NewsPaper paper;
+
+	 public NewsReader(NewsPaper paper){
+	    this.paper=paper;
+	  }
+
+	 public void run(){
+	    System.out.println("오늘의 뉴스: "+paper.getTodayNews());
+	  }
+
+}
+
+	
+
+public class Seo {
+
+	/*
+	public static void main(String[] args) throws InterruptedException {
+		
+		//Thread class 상속후 사용 방법
+		ThreadTest t1 = new ThreadTest(1,100);
+		ThreadTest t2 = new ThreadTest(1,100);
+		ThreadTest t3 = new ThreadTest(1,100);
+
+		//Runnable interface 상속 후 사용방법
+		RunnableTest r1 = new RunnableTest(1,50);
+		RunnableTest r2 = new RunnableTest(51,100);
+		RunnableTest r3 = new RunnableTest(1,100);
+		Thread rt1 = new Thread(r1);
+		Thread rt2 = new Thread(r2);
+		Thread rt3 = new Thread(r3);
+				
+		//한개의 인스턴스에 의해 확보된 메모리 공간은 하나
+		//하나의 메모리 공간을 공유하면서 여러개의 스레드를 만드는 방법
+		Thread rt4 = new Thread(r1);
+		Thread rt5 = new Thread(r1);
+		Thread rt6 = new Thread(r1);
+
+		rt1.start();
+		rt2.start();
+		
+		//thread_instance.join() : 해당 명령어가 들어있는 함수의 thread가 thread_instance의 thread가 끝날 때 까지 대기
+		//main thread가 rt1의 thread가 끝날 때 까지 기다려야 함
+		rt1.join();
+		rt2.join();
+		
+		System.out.println(r1.sum);
+		System.out.println(r2.sum);
+	}
+	//*/
+
+	public static void main(String[] args) {
+		
+		NewsPaper paper = new NewsPaper();
+	    NewsReader reader1 = new NewsReader(paper);
+	    NewsReader reader2 = new NewsReader(paper);
+	    NewsWriter writer = new NewsWriter(paper);
+
+	    try{
+
+	      reader1.start();
+	      reader2.start();
+
+	      Thread.sleep(1000);
+	      writer.start();
+
+	      reader1.join();
+	      reader2.join();
+	      writer.join();
+
+	    }
+
+	    catch(InterruptedException e){
+	      e.printStackTrace();
+	    }
+	}
+	
+	
+
+}
