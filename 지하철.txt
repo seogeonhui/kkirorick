@@ -1,0 +1,41 @@
+public class CarApp{
+	public static void main(String[] args){
+		
+		Custmoer cust = new Custmoer();
+		cust.name="홍길동";
+		cust.phone="010-1234-5967";
+		cust.email="drifgjei@naver.com";
+		int Salary=4;
+		
+
+		Car c = new Car();
+		c.type="suv";
+		c.name="oio";
+		c.year=1;
+		c.price=49;
+		
+		//제조공장 정보 입력하기
+		Factory f = new Factory();
+		f.nation="대한민국";
+		f.city="울산광역시";
+
+		cust.usedCar=c;
+		
+		// 해당 차량의 제조공장 정보 연결
+		
+		
+
+
+
+		c.factoryInfo = f;
+
+		System.out.println("고객명 : " + cust.name);
+		System.out.println("고객명 : " + cust.phone);
+		System.out.println("고객명 : " + cust.email);
+		System.out.println("고객명 : " + cust.usedCar.type);
+		System.out.println("고객명 : " + cust.usedCar.name);
+		System.out.println("고객명 : " + cust.usedCar.factoryInfo.city);
+		System.out.println("고객명 : " + cust.usedCar.factoryInfo.nation);
+	
+	}
+}
