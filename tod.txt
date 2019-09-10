@@ -1,0 +1,97 @@
+public class ComicsService {
+	
+	private Comics[] books = new Comics[10];
+	private Rental[] rentalList = new Rental[100];
+	private int position =0;
+
+	public ComicsService(){
+		//books 배열에 책정보 저장하기
+		books[0] = new Comics(100,"열혈강호1",1000,10);
+		books[1] = new Comics(101,"열혈강호2",2000,10);
+		books[2] = new Comics(102,"열혈강호3",3000,10);
+		books[3] = new Comics(103,"열혈강호4",4000,10);
+		books[4] = new Comics(104,"열혈강호5",5000,10);
+		books[5] = new Comics(105,"열혈강호6",6000,10);
+		books[6] = new Comics(106,"열혈강호7",7000,10);
+		books[7] = new Comics(107,"열혈강호8",8000,10);
+		books[8] = new Comics(108,"열혈강호9",9000,10);
+		books[9] = new Comics(109,"열혈강호10",10000,10);
+	}
+
+
+	//전체만화책 정보 표시기능
+	public void displayAllComics(){
+			for(Comics x:books){
+				System.out.println("책번호"+x.getNo());
+				System.out.println("책번호"+x.getTitle());
+				System.out.println("책번호"+x.getPrice());
+				System.out.println("책번호"+x.getStock());
+			}
+	}
+
+	//전달받은 책번호와 테이블번호로 대여처리하는 기능
+	public void rentComics(int tableNo, int bookNo){  //매번 달라지는건 매개변수
+		//책번호에 해당하는 책 찾기
+			Comics com=null;
+		for(Comics x :books){
+			if(bookNo == x.getNo()){
+				com=x;
+				break;
+			}
+		}
+		com.setStock(com.getStock()-1);
+
+		Rental rental = new Rental();
+	    rental.setTableNo(tableNo);
+		rental.setBookNo(com.getNo());
+		rental.setTitle(com.getTitle());
+		rental.setPrice(com.getPrice()/10);
+		rental.setStatus("대여");
+			
+			
+		rentalList [position++] = rental;	
+		//대여정보 생성하기
+		//대여정보 배열에 담기
+		//책의 재고 감소시키기
+	}
+
+	//전달받은 테이블번호와 책번호에 해당하는 대여정보 반납처리
+	public void returnComics(int tableNo, int bookNo){
+		//테이블번호와 책번호에 해당하는 대여정보 찾기
+		Rental rental=null;
+		for(Rental x:rentalList){
+			if(x==null){
+				break;
+			}else{
+				if(tableNo==x.getTableNo() && bookNo == x.getBookNo()){
+					rental=x;
+					break;
+				}
+			}
+		}
+		rental.setStatus("반납");
+		Comics co1 = null;
+		for(Comics x:books){
+			if(x.getNo()==bookNo){
+				co1=x;
+				break;
+			}
+		}
+		co1.setStock(co1.getStock()+1);
+		//대여정보의 상태를 "반납"으로 변경하기
+		//책번호에 해당하는 책 찾기
+		//책의 재고 증가시키기
+	}
+	//현재 대여중인 대여정보 표시기능
+	public void displayRental(){
+		//대여상태가 "대여"인 대여정보를 화면에 표시하기
+		
+	}
+
+	//총 매출을 표시하는기능
+	public void displayTotalAmount(){
+		// 총매출 정보를 집계해서 화면에 표시하기
+
+	}
+}
+
